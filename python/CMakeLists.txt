@@ -16,10 +16,14 @@ project(pysdsl2)
 include_directories("${CMAKE_SOURCE_DIR}include/sdsl")
 include_directories("${CMAKE_SOURCE_DIR}/python")
 
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
 add_subdirectory(pybind11)
 
 file (GLOB SOURCE_FILES "lib/*.cpp")
 file (GLOB HEADER_FILES "include/sdsl/*.hpp")
 
-pybind11_add_module(pysdsl2 ${SOURCE_FILES} ${HEADER_FILES}  src/lib.cpp)
+file (GLOB INCLUDE_MODULE "include/*")
+file (GLOB SOURCE_MODULE "src/*.cpp")
+
+pybind11_add_module(pysdsl2 ${SOURCE_FILES} ${HEADER_FILES} ${INCLUDE_MODULE} ${SOURCE_MODULE})
 target_link_libraries(pysdsl2 PUBLIC sdsl)
