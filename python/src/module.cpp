@@ -13,6 +13,7 @@ PYBIND11_MODULE(pysdsl2, m) {
     
     make_binding_intvector(m);
     make_binding_bitvector(m);
-    
     make_binding_encvector(m);
+    make_binding_vlcvector(m);
+    make_binding_dacvector(m);
 }
