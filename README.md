@@ -6,7 +6,7 @@ This project is based on [pysdsl][pysdsl] the reason of this project is because 
 Installation using pip:
 
 ```sh
-git clone https://github.com/diicc-udec/sdsl4py.git --recursive
+git clone https://github.com/algorithms-diicc/sdsl4py.git --recursive
 cd sdsl4py
 pip install .
 ```
