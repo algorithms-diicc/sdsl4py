@@ -32,10 +32,10 @@ print(sdsl4py.size_in_bytes(ev))
 
 Data structures can be load and saved to a file with the utility function
 ```python
-store_to_file(ev, "ev")
+sdsl4py.store_to_file(ev, "ev")
 
-ev2 = sdsl.enc_vector_elias_delta()
-load_from_fike(ev2, "ev")
+ev2 = sdsl4py.enc_vector_elias_delta()
+sdsl4py.load_from_file(ev2, "ev")
 ```
 
 List of all available vectors:
