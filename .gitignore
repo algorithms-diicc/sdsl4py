@@ -9,3 +9,6 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
+sdsl4py-env
+build
+sdsl4py.egg-info
