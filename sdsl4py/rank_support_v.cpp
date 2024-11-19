@@ -34,12 +34,5 @@ void add_rank_support(py::module &m, const char* name) {
         )pbdoc");
 }
 
-PYBIND11_MODULE(sdsl_rank_support, m) {
-    m.doc() = "Python bindings for SDSL rank supports";
-
-    // Agregar rank supports al módulo
-    add_rank_support<sdsl::rank_support_v<1>>(m, "RankSupportV1");  // Rank support para bits de valor 1
-    add_rank_support<sdsl::rank_support_v<0>>(m, "RankSupportV0");  // Rank support para bits de valor 0
-}
 
 #endif // RANK_SUPPORT_CPP

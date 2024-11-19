@@ -34,12 +34,5 @@ void add_select_support(py::module &m, const char* name) {
         )pbdoc");
 }
 
-PYBIND11_MODULE(sdsl_select_support, m) {
-    m.doc() = "Python bindings for SDSL select supports";
-
-    // Agregar select supports al módulo
-    add_select_support<sdsl::select_support_mcl<1>>(m, "SelectSupportMCL1");  // Select support para bits de valor 1
-    add_select_support<sdsl::select_support_mcl<0>>(m, "SelectSupportMCL0");  // Select support para bits de valor 0
-}
 
 #endif // SELECT_SUPPORT_CPP
