@@ -76,7 +76,7 @@ Recently Succint Data Structures added:
 ## How to add a implentation to the library
 This project provides Python bindings for the compact data structures in the SDSL library using pybind11. It is modular and designed to facilitate extensions with new implementations.
 # Step 0:
-Make sure you have the following tools installed:
+Make sure you have the following tools installed and cloned correctly the repositorie using the installation guide:
 * `Pybind11`: A library for creating Python bindings in C++.
 * `SDSL`: Succinct Data Structures Library.
 * A compiler compatible with C++14 or later (such as g++ or clang).
