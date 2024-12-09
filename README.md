@@ -12,7 +12,7 @@ pip install .
 ```
 
 ## Getting Started
-The core class is the library is the `int_vector` it support almost all 
+Here we have a example of the `int_vector` it support almost all 
 of the sdsl int_vector functions. 
 
 The vectors can be compressed into enc, vlc or dac vectors.
@@ -65,6 +65,70 @@ List of utility methods:
 * `size_in_bytes(v)` returns size in bytes
 * `size_in_mega_bytes(v)` returns size in mega bytes
 
+Recently Succint Data Structures added:
+* `Wavelet Trees` int, huff, huff_int, gmr
+* `Suffix Array` wt and sada
+* `Largest Common Prefix` wt and bit compressed
+* `Balanced Parenthesis Support` sada g and gg
+* `Rank Support` v0 and v1 
+* `Select Support` mcl0 and mcl1
+
+## How to add a implentation to the library
+This project provides Python bindings for the compact data structures in the SDSL library using pybind11. It is modular and designed to facilitate extensions with new implementations.
+# Step 0:
+Make sure you have the following tools installed:
+* `Pybind11`: A library for creating Python bindings in C++.
+* `SDSL`: Succinct Data Structures Library.
+* A compiler compatible with C++14 or later (such as g++ or clang).
+* Python 3.x and development tools (e.g., python3-dev or equivalent).
+# Step 1: Create a .cpp File
+Create a new file in the src/ directory for your implementation. For example, to add a wrapper for Rank Support, create the file rank_support.cpp.
+# Step 2: Include Required Dependencies
+Include the necessary pybind11 and SDSL headers in the .cpp file:
+```cpp
+#include <pybind11/pybind11.h>
+#include <sdsl/rank_support.hpp>
+#include <sdsl/vectors.hpp>
+```
+# Step 3: Define Functions and Classes
+Define the classes and functions needed to expose the features of the data structure. For example:
+```cpp
+template <typename T>
+void add_rank_support(py::module &m, const char* name) {
+    py::class_<T>(m, name)
+        .def(py::init<>())  // Default constructor
+        .def("rank", [](const T& rs, size_t idx) { return rs.rank(idx); }, R"pbdoc(
+            Returns the rank of the index in the data structure.
+        )pbdoc")
+        .def("size_in_bytes", [](const T& rs) { return sdsl::size_in_bytes(rs); }, R"pbdoc(
+            Returns the size in bytes of the rank support.
+        )pbdoc");
+}
+```
+# Step 4: Expose Classes to the Module
+Use the `PYBIND11 MODULE` macro to expose the classes to the Python module:
+```cpp
+PYBIND11_MODULE(sdsl4py, m) {
+    m.doc() = "Python bindings for SDSL Rank Support";
+
+    // Add rank support
+    add_rank_support<sdsl::rank_support_v<1>>(m, "RankSupportV1");
+}
+```
+# Step 5: Building
+in the sdsl4py directory:
+```bash
+pip install .
+```
+
+# Step 6: Test in python
+```python
+import sdsl_rank_support
+
+rank_support = sdsl_rank_support.RankSupportV1()
+print("Size in bytes:", rank_support.size_in_bytes())
+```
+
 
 ## License
 'sdsl4py' is distributed under the GNU General Public License (GPLv3) 
@@ -76,4 +140,4 @@ license. For more details see [LICENSE][LICENSE] file
 
 [SDSL]: https://github.com/simongog/sdsl-lite
 [pysdsl]: https://github.com/QratorLabs/pysdsl.git
-[LICENSE]: https://github.com/Sherlock898/sdsl4py/blob/main/LICENSE
+[LICENSE]: https://github.com/algorithms-diicc/sdsl4py/blob/main/LICENSE
