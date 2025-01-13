@@ -1,13 +1,14 @@
 # sdsl4py: Python Bindings for SDSL
-`sdsl4py` is a Python library that provides bindings for the [SDSL][SDSL](Succinct Data Structure Library).
-This project is based on [pysdsl][pysdsl] the reason of this project is because pysdsl stop recieving support.
+This repository is a Python library that provides bindings for the *Succinct Data Structure Library - [SDSL][SDSL]*, called `sdsl4py`. This project aims to provide an alternative to the project [pysdsl][pysdsl], a Python wrapper for the SDSL library, which is currently not receiving support.
 
 ## Installation         
-Installation using pip:
+We recommend to use a fresh Python environment to install sdsl4py:
 
 ```sh
 git clone https://github.com/algorithms-diicc/sdsl4py.git --recursive
 cd sdsl4py
+python3 -m venv sdsl4py-env # Create the Python environment
+source sdsl4py-env/bin/activate # Active the Python environment
 pip install .
 ```
 
