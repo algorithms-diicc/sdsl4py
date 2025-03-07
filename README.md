@@ -75,61 +75,61 @@ plt.ylabel('random numbers')
 plt.legend()
 plt.savefig('compact_vectors_plot.png')
 ```
+The previous code generates this image
+
+ ![Example of a plot using `sdsl4py` and matplotlib](img/compact_vectors_plot.png) 
 
 ## List of supported classes
-List of all available vectors:
-Integer Vectors:
+List of available int_vector:
+* `int_vector(contained)` default constructor
 * `int_vector(size, default_value, width)` dynamic width
-* `bit_vector(size, default_value)` static 1bit width
-* `int_vector_8(size, default_value)` static 8bit width
-* `int_vector_16(size, default_value)` static 16bit width
-* `int_vector_32(size, default_value)` static 32bit width
-* `int_vector_64(size, default_value)` static 64bit width
+* `bit_vector(size, default_value)` static 1-bit width
+* `int_vector_8(size, default_value)` static 8-bit width
+* `int_vector_16(size, default_value)` static 16-bit width
+* `int_vector_32(size, default_value)` static 32-bit width
+* `int_vector_64(size, default_value)` static 64-bit width
 
-Compressed Integer Vectors:
-* `enc_vector_elias_delta(container)` enc vector, elias delta encoding, density 128
-* `enc_vector_elias_gamma(container)` enc vector, elias gamma encoding, density 128
-* `enc_vector_fibonacci(container)` enc vector, fibonacci encoding, density 128
-* `enc_vector_comma_2(container)` enc vector, comma 2 encoding, density 128
-* `vlc_vector_elias_delta(container)` vlc vector, elias delta encoding, density 128
-* `vlc_vector_elias_gamma(container)` vlc vector, elias gamma encoding, density 128
-* `vlc_vector_fibonacci(container)` vlc vector, fibonacci encoding, density 128
-* `vlc_vector_comma_2(container)` vlc vector, comma 2 encoding, density 128
-* `dac_vector(container)` dac vector
-
+List of compressed integer vectors:
+* `enc_vector_elias_delta(container)`: binding of `enc_vector` with elias-delta encoding and sampling of 128
+* `enc_vector_elias_gamma(container)`: binding of `enc_vector` with elias-gamma encoding and sampling of 128
+* `enc_vector_fibonacci(container)`: binding of `enc_vector` with fibonacci encoding and sampling of 128
+* `enc_vector_comma_2(container)`: binding of `enc_vector` with comma-2 encoding and sampling of 128
+* `vlc_vector_elias_delta(container)`: binding of `vlc_vector` with elias-delta encoding and sampling of 128
+* `vlc_vector_elias_gamma(container)`: binding of `vlc_vector` with elias-gamma encoding and sampling of 128
+* `vlc_vector_fibonacci(container)`: binding of `vlc_vector` with fibonacci encoding and sampling of 128
+* `vlc_vector_comma_2(container)`: binding of `vlc_vector` with comma 2 encoding and density 128
+* `dac_vector(container)`: binding of `dac_vector`
 
 List of utility methods:
-* `store_to_file(v, file)` serialize vector v to file
-* `load_from_file(v, file)` load vector v to file
-* `size_in_bytes(v)` returns size in bytes
-* `size_in_mega_bytes(v)` returns size in mega bytes
+* `store_to_file(v, file)`: serialize vector v to file
+* `load_from_file(v, file)`: load vector v from file
+* `size_in_bytes(v)`: returns size in bytes
+* `size_in_mega_bytes(v)`: returns size in mega bytes
 
-Recently Succint Data Structures added:
-* `Wavelet Trees` int, huff, huff_int, gmr
-* `Suffix Array` wt and sada
-* `Largest Common Prefix` wt and bit compressed
-* `Balanced Parenthesis Support` sada g and gg
-* `Rank Support` v0 and v1 
-* `Select Support` mcl0 and mcl1
+List of other implemented bindings (see examples of how to use them [here](examples):
+* `Rank data structures` for bitvectors, supporting `rank_support_v<0>` and `rank_support_v<1>` versions
+* `Select data structures` for bitvectors, supporting `rank_support_mcl<0>` and `rank_support_mcl<1>` versions
+* *Wavelet Trees*, supporting `wt_int`, `wt_huff`, `wt_huff_int` and `wt_gmr` versions
+* *Compresed Suffix Array*, supporting `csa_wt` and `csa_sada` versions
+* *Largest Common Prefix*, supporting `lcp_wt` and `lcp_bitcompressed` versions
+* *Balanced Parenthesis Support*, supporting `bp_support_sada`, `bp_support_g` and `bp_support_gg` versions
 
-## How to add a implentation to the library
-This project provides Python bindings for the compact data structures in the SDSL library using pybind11. It is modular and designed to facilitate extensions with new implementations.
-# Step 0:
-Make sure you have the following tools installed and cloned correctly the repository using the installation guide:
-* `Pybind11`: A library for creating Python bindings in C++.
-* `SDSL`: Succinct Data Structures Library.
-* A compiler compatible with C++14 or later (such as g++ or clang).
-* Python 3.x and development tools (e.g., python3-dev or equivalent).
-# Step 1: Create a .cpp File
-Create a new file in the src/ directory for your implementation. For example, to add a wrapper for Rank Support, create the file rank_support.cpp.
-# Step 2: Include Required Dependencies
-Include the necessary pybind11 and SDSL headers in the .cpp file:
-```cpp
-#include <pybind11/pybind11.h>
-#include <sdsl/rank_support.hpp>
-#include <sdsl/vectors.hpp>
-```
-# Step 3: Define Functions and Classes
+## How to add more bindings to the library
+This implementation is modular and designed to facilitate extensions with new bindings. If you want to add more bindings, follow the steps below:
+* **Step 0.**  Make sure you have the following tools installed and cloned correctly the repository using the installation guide:
+    * `Pybind11`: A library for creating Python bindings in C++.
+    * `SDSL`: Succinct Data Structures Library.
+    * A compiler compatible with C++14 or later (such as g++ or clang).
+    * Python 3.x and development tools (e.g., python3-dev or equivalent).
+* **Step 1.** Create a new file in the `sdsl4py` folder with your binding implementation. For example, to add a wrapper for *rank support*, create the file rank_support.cpp.
+* **Step 2.** Include Required Dependencies
+    Include the necessary pybind11 and SDSL headers in the .cpp file:
+    ```cpp
+    #include <pybind11/pybind11.h>
+    #include <sdsl/rank_support.hpp>
+    #include <sdsl/vectors.hpp>
+    ```
+* **Step 3.** Define Functions and Classes
 Define the classes and functions needed to expose the features of the data structure. For example:
 ```cpp
 template <typename T>
@@ -144,7 +144,7 @@ void add_rank_support(py::module &m, const char* name) {
         )pbdoc");
 }
 ```
-# Step 4: Expose Classes to the Module
+* **Step 4.** Expose Classes to the Module
 Use the `PYBIND11 MODULE` macro to expose the classes to the Python module:
 ```cpp
 PYBIND11_MODULE(sdsl4py, m) {
@@ -154,13 +154,13 @@ PYBIND11_MODULE(sdsl4py, m) {
     add_rank_support<sdsl::rank_support_v<1>>(m, "RankSupportV1");
 }
 ```
-# Step 5: Building
+* **Step 5.** Building
 in the sdsl4py directory:
 ```bash
 pip install .
 ```
 
-# Step 6: Test in python
+* **Step 6.** Test in python
 ```python
 import sdsl_rank_support
 
