@@ -4,19 +4,25 @@ This repository is a Python library that provides bindings for the *Succinct Dat
 ## Installation         
 We recommend to use a fresh Python environment to install sdsl4py:
 
-```sh
-git clone https://github.com/algorithms-diicc/sdsl4py.git --recursive
-cd sdsl4py
-python3 -m venv sdsl4py-env # Create the Python environment
-source sdsl4py-env/bin/activate # Active the Python environment
-pip install .
-```
+1. Clone the repository
+    ```sh
+    git clone https://github.com/algorithms-diicc/sdsl4py.git --recursive
+    cd sdsl4py
+    ```
+2. Install dependencies
+    ```sh
+    apt-get install libdivsufsort-dev
+    ```
+3. Install the Python environment
+    ```sh
+    python3 -m venv sdsl4py-env # Create the Python environment
+    source sdsl4py-env/bin/activate # Active the Python environment
+    pip install .
+    ```
 
-## Getting Started
-Here we have a example of the `int_vector` it support almost all 
-of the sdsl int_vector functions. 
 
-The vectors can be compressed into enc, vlc or dac vectors.
+## First example
+Here we have a example of the `int_vector`, `enc_vector`, `vlc_vector` and `dac_vector` classes. 
 
 ```python
 import sdsl4py
@@ -26,12 +32,16 @@ for i in range(100):
     v[i] = i
 
 ev = sdsl4py.enc_vector_elias_delta(v)
+vv = sdsl4py.vlc_vector_elias_delta(v)
+dv = sdsl4py.dac_vector(v)
 
-print(sdsl4py.size_in_bytes(v))
-print(sdsl4py.size_in_bytes(ev))
+print(sdsl4py.size_in_bytes(v), "bytes")  # 113 bytes
+print(sdsl4py.size_in_bytes(ev), "bytes") # 50 bytes
+print(sdsl4py.size_in_bytes(vv), "bytes") # 161 bytes
+print(sdsl4py.size_in_bytes(dv), "bytes") # 193 bytes
 ```
 
-Data structures can be load and saved to a file with the utility function
+Data structures can be stored and loaded to/from using `store_to_file` and `load_from_file` functionalities
 ```python
 sdsl4py.store_to_file(ev, "ev")
 
@@ -39,6 +49,34 @@ ev2 = sdsl4py.enc_vector_elias_delta()
 sdsl4py.load_from_file(ev2, "ev")
 ```
 
+## Combining sdsl4py with numpy/matplotlib
+`sdsl4py` can be combined with well-known Python libraries as numpy and matplotlib
+
+```python
+import sdsl4py
+import numpy as np # Probably you need to run 'pip install numpy'
+import matplotlib.pyplot as plt # Probably you need to run 'pip install matplotlib'
+
+# Create a random integer vector for testing
+np_v = np.random.randint(low=10, high=100, size=512)
+# Create the corresponding int_vector
+v1 = sdsl4py.int_vector(np_v)
+
+np_v += 10 # Increase all the values of the vector by 10
+
+# Create a dac_vector for the updated np_v
+v2 = sdsl4py.int_vector(np_v)
+dv = sdsl4py.dac_vector(v2)
+
+# Plot int_vector and dac_vector
+plt.plot(v1, label='int_vector', color='blue')
+plt.plot(dv, label='dac_vector', color='red', linestyle='--')
+plt.ylabel('random numbers')
+plt.legend()
+plt.savefig('compact_vectors_plot.png')
+```
+
+## List of supported classes
 List of all available vectors:
 Integer Vectors:
 * `int_vector(size, default_value, width)` dynamic width
