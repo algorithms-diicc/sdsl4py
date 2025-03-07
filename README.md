@@ -117,20 +117,18 @@ List of other implemented bindings (see examples of how to use them [here](examp
 ## How to add more bindings to the library
 This implementation is modular and designed to facilitate extensions with new bindings. If you want to add more bindings, follow the steps below:
 * **Step 0.**  Make sure you have the following tools installed and cloned correctly the repository using the installation guide:
-    * `Pybind11`: A library for creating Python bindings in C++.
+    * `pybind11`: A library for creating Python bindings in C++.
     * `SDSL`: Succinct Data Structures Library.
     * A compiler compatible with C++14 or later (such as g++ or clang).
     * Python 3.x and development tools (e.g., python3-dev or equivalent).
 * **Step 1.** Create a new file in the `sdsl4py` folder with your binding implementation. For example, to add a wrapper for *rank support*, create the file rank_support.cpp.
-* **Step 2.** Include Required Dependencies
-    Include the necessary pybind11 and SDSL headers in the .cpp file:
+* **Step 2.** Include the necessary pybind11 and SDSL headers in the .cpp file. For instance:
     ```cpp
     #include <pybind11/pybind11.h>
     #include <sdsl/rank_support.hpp>
     #include <sdsl/vectors.hpp>
     ```
-* **Step 3.** Define Functions and Classes
-Define the classes and functions needed to expose the features of the data structure. For example:
+* **Step 3.** Define the classes and functions that you want to bind. For example:
 ```cpp
 template <typename T>
 void add_rank_support(py::module &m, const char* name) {
@@ -144,8 +142,7 @@ void add_rank_support(py::module &m, const char* name) {
         )pbdoc");
 }
 ```
-* **Step 4.** Expose Classes to the Module
-Use the `PYBIND11 MODULE` macro to expose the classes to the Python module:
+* **Step 4.** Use the `PYBIND11 MODULE` macro to make visible the SDSL classes to the Python module:
 ```cpp
 PYBIND11_MODULE(sdsl4py, m) {
     m.doc() = "Python bindings for SDSL Rank Support";
@@ -154,20 +151,24 @@ PYBIND11_MODULE(sdsl4py, m) {
     add_rank_support<sdsl::rank_support_v<1>>(m, "RankSupportV1");
 }
 ```
-* **Step 5.** Building
+* **Step 5.** Build again the project
 in the sdsl4py directory:
 ```bash
 pip install .
 ```
 
-* **Step 6.** Test in python
+* **Step 6.** Test in Python. For example
 ```python
 import sdsl_rank_support
 
 rank_support = sdsl_rank_support.RankSupportV1()
 print("Size in bytes:", rank_support.size_in_bytes())
 ```
-
+## Contributors
+- José Fuentes (https://github.com/jfuentess)
+- Pedro Paris (https://github.com/soyantouwu)
+- Sebastián Aguayo (https://github.com/sherlock898)
+- Gaspar Jiménez (https://github.com/Gaspinho)
 
 ## License
 'sdsl4py' is distributed under the GNU General Public License (GPLv3) 
