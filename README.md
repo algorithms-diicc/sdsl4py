@@ -1,4 +1,4 @@
-# sdsl4py: Python Bindings for SDSL
+# SDSL4py: Python Bindings for SDSL
 This repository is a Python library that provides bindings for the *Succinct Data Structure Library - [SDSL][SDSL]*, called `sdsl4py`. This project aims to provide an alternative to the project [pysdsl][pysdsl], a Python wrapper for the SDSL library, which is currently not receiving support.
 
 ## Installation         
@@ -163,7 +163,16 @@ import sdsl_rank_support
 
 rank_support = sdsl_rank_support.RankSupportV1()
 print("Size in bytes:", rank_support.size_in_bytes())
+
 ```
+## Troubleshooting
+* If during the installation you get this (or similar) error:
+    ```sh
+    CMake Error at sdsl-lite/CMakeLists.txt:1 (cmake_minimum_required):
+            Compatibility with CMake < 3.5 has been removed from CMake.
+    ```
+    The solution is to update `cmake_minimum_required(VERSION 3.15)` in the files `sdsl-lite/CMakeLists.txt`, `sdsl-lite/external/libdivsufsort/CMakeLists.txt` and `sdsl-lite/external/googletest/googletest/CMakeLists.txt`.
+
 ## Contributors
 - José Fuentes (https://github.com/jfuentess)
 - Pedro Paris (https://github.com/soyantouwu)
