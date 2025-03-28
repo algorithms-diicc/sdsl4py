@@ -7,7 +7,7 @@
 
 namespace py = pybind11;
 
-// Agregar funciones de select support
+// Helper function to add (bit) select classes to the Python module
 template <typename T>
 void add_select_support(py::module &m, const char* name) {
     py::class_<T>(m, name)

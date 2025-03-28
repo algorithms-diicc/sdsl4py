@@ -12,6 +12,7 @@ using sdsl::vlc_vector;
 using sdsl::dac_vector;
 
 
+// Helper function to add compressed vector classes to the Python module
 template <class T>
 inline auto add_compressed_vector(py::module &m, const char* name){
 

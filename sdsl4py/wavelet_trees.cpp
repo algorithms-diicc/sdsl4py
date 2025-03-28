@@ -7,13 +7,12 @@
 
 namespace py = pybind11;
 
-// Tipos de Wavelet Trees en SDSL
 using sdsl::wt_int;
 using sdsl::wt_huff;
 using sdsl::wt_huff_int;
 using sdsl::wt_gmr;
 
-// Función auxiliar para añadir wavelet trees a un módulo Python
+// Helper function to add wavelet tree classes to the Python module
 template <typename T>
 void add_wavelet_tree(py::module &m, const char* name) {
     py::class_<T>(m, name)
@@ -58,10 +57,18 @@ void add_wavelet_tree(py::module &m, const char* name) {
             Loads the wavelet tree from a file.
             Args:
                 file (str): The name of the file to load the tree from.
+        )pbdoc")
+        .def("construct0", [](T& wt, const std::string& file) { return
+	      sdsl::construct(wt, file, 0); }, R"pbdoc(
+            Construct the wavelet tree from a serialized input file.
+        )pbdoc")
+        .def("construct1", [](T& wt, const std::string& file) { return
+	    sdsl::construct(wt, file, 1); }, R"pbdoc(
+            Construct the wavelet tree from a file with 1-byte symbols.
         )pbdoc");
 }
 
-// Helper function to add wavelet tree classes to the Python module
+// Helper function to add wavelet tree classes to the Python module (with support to 2D queries)
 template <typename T>
 void add_wavelet_tree2D(py::module &m, const char* name) {
     py::class_<T>(m, name)
@@ -117,6 +124,14 @@ void add_wavelet_tree2D(py::module &m, const char* name) {
             Loads the wavelet tree from a file.
             Args:
                 file (str): The name of the file to load the tree from.
+        )pbdoc")
+        .def("construct0", [](T& wt, const std::string& file) { return
+	      sdsl::construct(wt, file, 0); }, R"pbdoc(
+            Construct the wavelet tree from a serialized input file.
+        )pbdoc")
+        .def("construct1", [](T& wt, const std::string& file) { return
+	    sdsl::construct(wt, file, 1); }, R"pbdoc(
+            Construct the wavelet tree from a file with 1-byte symbols.
         )pbdoc");
 }
 

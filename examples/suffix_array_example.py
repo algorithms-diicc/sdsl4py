@@ -1,12 +1,11 @@
 import sdsl4py
 
-# Crear un objeto de SuffixArray y LCPArray
-suffix_array = sdsl4py.SuffixArrayWT()
+# Create the Suffix array from this Python file
+sa = sdsl4py.SuffixArrayWT()
+sa.construct1("suffix_array_example.py")
 
-# Cargar datos desde un archivo
-suffix_array.load_from_file("suffix_array_file")
+# Compute the size in bytes
+print("Suffix Array size (bytes):", sa.size_in_bytes())
 
-# Obtener el tamaño en bytes
-print("Suffix Array size (bytes):", suffix_array.size_in_bytes())
-# Acceder a elementos individuales
-print("Suffix at index 10:", suffix_array.get_suffix(10))
+# Get the 11th entry of the suffix array
+print("Suffix at index 10:", sa.get(10))

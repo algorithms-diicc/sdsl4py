@@ -11,6 +11,7 @@ namespace py = pybind11;
 
 using sdsl::int_vector;
 
+// Helper function to add int_vector class to the Python module
 template <class T>
 inline auto add_int_vector(py::module &m, const char* name){
 
@@ -21,12 +22,10 @@ inline auto add_int_vector(py::module &m, const char* name){
     m.def("load_from_file", &sdsl::load_from_file<T>, py::arg("v"), py::arg("file"));
 
     return py::class_<T>(m, name, py::buffer_protocol())
-        // Constructor que acepta el tamaño, valor por defecto y ancho de entero
         .def(py::init([](uint64_t size, uint64_t default_value, uint8_t int_width){
             return new T(size, default_value, int_width);
         }), py::arg("size") = 1, py::arg("default_value") = 0, py::arg("int_width") = 64)
 
-        // Nuevo constructor que acepta una colección de Python
         .def(py::init([](const std::vector<uint64_t>& data){
             T v(data.size());
             for(size_t i = 0; i < data.size(); ++i) {

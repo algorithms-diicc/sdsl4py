@@ -1,18 +1,30 @@
 import sdsl4py
 
-# Crear un Wavelet Tree para enteros
-wavelet_tree_int = sdsl4py.WaveletTreeInt()
-wavelet_tree_int.load_from_file("data_int.wt")
-
-# Obtener el tamaño en bytes
-print("Size in bytes:", wavelet_tree_int.size_in_bytes())
-
-# Guardar el Wavelet Tree en un archivo
-wavelet_tree_int.store_to_file("output_int.wt")
-
-# Crear instancia de wt_int
+# Create a wavelet tree wt_int from this Python file
 wt = sdsl4py.WaveletTreeInt()
+wt.construct1("wt_int_example.py")
 
-# Llamar a range_search_2d
-resultados = wt.range_search_2d(0, 10, 1, 5)
-print(resultados)  # Esto debería imprimir los pares (índice, valor)
+# Get the size in bytes
+print("Size in bytes:", wt.size_in_bytes())
+
+
+# Count how many occurrences of the 's' symbols there are in the 14 first
+# symbols "import sdsl4py"
+print("rank(wt, 13, 's'):", wt.rank(13, ord('s')))
+
+# Get the position of the first 's' in the 14 first symbols "import sdsl4py" 
+print("select(wt, 1, 's'):", wt.select(1, ord('s')))
+# Get the position of the second 's' in the 14 first symbols "import sdsl4py"
+print("select(wt, 2, 's'):", wt.select(2, ord('s')))
+
+# Store the wavelet tree to a file
+wt.store_to_file("output.wt_int")
+
+# Load the wavelet tree from a file
+wt2 = sdsl4py.WaveletTreeInt()
+wt2.load_from_file("output.wt_int")
+
+# Run a 2D range query. In this case, counting how many occurrences of the
+# symbols 's', 't' or 'u' there are  in the 14 first symbols "import sdsl4py"
+results = wt2.range_search_2d(0, 13, 115, 117)
+print(results)

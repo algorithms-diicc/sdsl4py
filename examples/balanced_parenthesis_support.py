@@ -1,29 +1,51 @@
 import sdsl4py
 
-# Crear un bit_vector de sdsl4py
-bv = sdsl4py.bit_vector(8)  # Inicializar un bit_vector de longitud 8
-bv[0] = 0
+# Representing the following tree as a balanced parentheses sequence
+#     o
+#    / \
+#   o   o
+#      / \
+#     o   o
+#    / \
+#   o   o
+#
+# (()((()())()))
+#
+
+# Create a bit_vector representing the balanced parentheses sequence (1: open, 0: close)
+bv = sdsl4py.bit_vector(14)
+bv[0] = 1
 bv[1] = 1
 bv[2] = 0
 bv[3] = 1
 bv[4] = 1
-bv[5] = 0
-bv[6] = 1
-bv[7] = 0
+bv[5] = 1
+bv[6] = 0
+bv[7] = 1
+bv[8] = 0
+bv[9] = 0
+bv[10] = 1
+bv[11] = 0
+bv[12] = 0
+bv[13] = 0
 
-# Crear una instancia de bp_support_g o el tipo correspondiente
+# Create the instance of bp_support_g
 bp = sdsl4py.BPSupportSada()
 
-# Inicializar la estructura con el bit_vector de sdsl4py
+# And initialize the data structure with the balanced parentheses sequence
 bp.initialize(bv)
 
-# Realizar operaciones
-open_pos = bp.find_open(5)  # Encuentra la posición de apertura
-close_pos = bp.find_close(5)  # Encuentra la posición de cierre
-rank_val = bp.rank(3)  # Obtiene el rank para la posición 3
-select_val = bp.select(2)  # Obtiene el select para la posición 2
+# Compute the Index of the open parenthesis matching bp[9]=')'
+open_pos = bp.find_open(9)
+# Compute the Index of the closing parenthesis matching bp[3]='('
+close_pos = bp.find_close(3)
 
-print(f"Posición de apertura: {open_pos}")
-print(f"Posición de cierre: {close_pos}")
-print(f"Rank de 3: {rank_val}")
-print(f"Select de 2: {select_val}")
+# Compute the number of open parentheses up to Index 10
+rank_val = bp.rank(10)
+# Compute the Index of the 4th open parenthesis
+select_val = bp.select(4)
+
+print("Index of the open parenthesis matching bp[9]=\')\':", open_pos)
+print("Index of the closing parenthesis matching bp[3]=\'(\':", close_pos)
+print("Rank of open parentheses up to Index 10:", rank_val)
+print("Index of the fourth open parenthesis:", select_val)

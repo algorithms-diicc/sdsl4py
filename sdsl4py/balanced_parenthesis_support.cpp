@@ -3,18 +3,18 @@
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-#include "sdsl/bp_support.hpp"  // Ajusta esta ruta según tu estructura de proyecto
+#include "sdsl/bp_support.hpp"
 #include "sdsl/bit_vectors.hpp"
 #include "sdsl/util.hpp"
 
 namespace py = pybind11;
 using namespace sdsl;
 
-// Definir wrapper para la clase bp_support_g
+// Helper function to add balanced parenthesis classes to the Python module
 template <typename T>
 void add_bp_support(py::module &m, const char* name) {
     py::class_<T>(m, name)
-        .def(py::init<>())  // Constructor
+        .def(py::init<>())  // Default constructor
         .def("find_open", &T::find_open)
         .def("find_close", &T::find_close)
         .def("enclose", &T::enclose)

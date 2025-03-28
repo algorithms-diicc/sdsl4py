@@ -27,8 +27,16 @@ void add_suffix_array(py::module &m, const char* name) {
         .def("load_from_file", [](T& sa, const std::string& file) { return sdsl::load_from_file(sa, file); }, R"pbdoc(
             Loads the suffix array from a file.
         )pbdoc")
-        .def("get_suffix", [](const T& sa, size_t idx) { return sa[idx]; }, R"pbdoc(
-            Returns the suffix at a given index in the suffix array.
+      .def("construct0", [](T& sa, const std::string& file) { return
+      sdsl::construct(sa, file, 0); }, R"pbdoc(
+            Construct the SA array from a serialized input file.
+        )pbdoc")
+      .def("construct1", [](T& sa, const std::string& file) { return
+      sdsl::construct(sa, file, 1); }, R"pbdoc(
+            Construct the SA array from a file with 1-byte symbols.
+        )pbdoc")
+        .def("get", [](const T& sa, size_t idx) { return sa[idx]; }, R"pbdoc(
+            Returns the idx-th entry of the suffix array.
         )pbdoc")
         .def("size", &T::size, R"pbdoc(
             Returns the number of elements in the suffix array.

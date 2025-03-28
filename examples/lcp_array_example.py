@@ -1,12 +1,11 @@
 import sdsl4py
 
-# Crear un objeto de SuffixArray y LCPArray
+# Create the LCP array from this Python file
 lcp_array = sdsl4py.LCPArrayWT()
+lcp_array.construct1("lcp_array_example.py")
 
-# Cargar datos desde un archivo
-lcp_array.load_from_file("lcp_array_file")
-
-# Obtener el tamaño en bytes
+# Compute the size in bytes
 print("LCP Array size (bytes):", lcp_array.size_in_bytes())
-# Acceder a elementos individuales
-print("LCP at index 10:", lcp_array.get_lcp(10))
+
+# Get the LCP at index 10
+print("LCP at index 10:", lcp_array.get(10))

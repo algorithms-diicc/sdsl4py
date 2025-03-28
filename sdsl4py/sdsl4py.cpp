@@ -35,32 +35,32 @@ PYBIND11_MODULE(sdsl4py, m){
 
     int_vector_wrapper(m);
     enc_vector_wrapper(m);
-    // Agregar wavelet trees al módulo
-    // Add int wavelet tree with Range Search 2D to the module
-    add_wavelet_tree2D<wt_int<>>(m, "WaveletTreeInt");// WARNING:add_wavelet_tree2D ONLY for wt_int
+    // Add wavelet trees to the Python module
+    add_wavelet_tree2D<wt_int<>>(m, "WaveletTreeInt");// Note: add_wavelet_tree2D only works for wt_int
     add_wavelet_tree<wt_huff<>>(m, "WaveletTreeHuff");
     add_wavelet_tree<wt_huff_int<>>(m, "WaveletTreeHuffInt");
     add_wavelet_tree<wt_gmr<>>(m, "WaveletTreeGMR");
-    // Agregar rank supports al módulo
+
+    // Add rank support to the Python module
     add_rank_support<sdsl::rank_support_v<1>>(m, "RankSupportV1");  // Rank support para bits de valor 1
     add_rank_support<sdsl::rank_support_v<0>>(m, "RankSupportV0");  // Rank support para bits de valor 0
-    // Agregar select supports al módulo
+
+    // Add select support to the Python module
     add_select_support<sdsl::select_support_mcl<1>>(m, "SelectSupportMCL1");  // Select support para bits de valor 1
     add_select_support<sdsl::select_support_mcl<0>>(m, "SelectSupportMCL0");  // Select support para bits de valor 0
-    //suffix array
+
+    // Add the compressed suffix array to the Python module
     add_suffix_array<sdsl::csa_wt<>>(m, "SuffixArrayWT");
     add_suffix_array<sdsl::csa_sada<>>(m, "SuffixArraySada");
-    // Longest Common Prefix (LCP) 
+
+    // Add the longest common prefix array to the Python module
     add_lcp_array<sdsl::lcp_wt<>>(m, "LCPArrayWT");
     add_lcp_array<sdsl::lcp_bitcompressed<>>(m, "LcpBitCompressed");
 
-    //balanced parenthesis support
+    //Add balanced parentheses support to the Python module
     add_bp_support<sdsl::bp_support_sada<>>(m, "BPSupportSada");
     add_bp_support<sdsl::bp_support_g<>>(m, "BPSupportG");
     add_bp_support<sdsl::bp_support_gg<>>(m, "BPSupportGG");
-    
-
-    
-
-    m.attr("__version__") = "0.0.1";
+   
+    m.attr("__version__") = "1.0";
 }

@@ -13,11 +13,11 @@ using sdsl::lcp_bitcompressed;
 using sdsl::lcp_dac;
 using sdsl::lcp_wt;
 
-// Función para agregar el Longest Common Prefix Array (LCP Array)
+// Helper function to add LCP array classes to the Python module
 template <typename T>
 void add_lcp_array(py::module &m, const char* name) {
     py::class_<T>(m, name)
-        .def(py::init<>())  // Constructor por defecto
+        .def(py::init<>())  // Default constructor
         .def("size_in_bytes", [](const T& lcp) { return sdsl::size_in_bytes(lcp); }, R"pbdoc(
             Returns the size of the LCP array in bytes.
         )pbdoc")
@@ -30,8 +30,16 @@ void add_lcp_array(py::module &m, const char* name) {
         .def("load_from_file", [](T& lcp, const std::string& file) { return sdsl::load_from_file(lcp, file); }, R"pbdoc(
             Loads the LCP array from a file.
         )pbdoc")
-        .def("get_lcp", [](const T& lcp, size_t idx) { return lcp[idx]; }, R"pbdoc(
-            Returns the LCP value at a given index in the LCP array.
+      .def("construct0", [](T& lcp, const std::string& file) { return
+      sdsl::construct(lcp, file, 0); }, R"pbdoc(
+            Construct the LCP array from a serialized input file.
+        )pbdoc")
+      .def("construct1", [](T& lcp, const std::string& file) { return
+      sdsl::construct(lcp, file, 1); }, R"pbdoc(
+            Construct the LCP array from a file with 1-byte symbols.
+        )pbdoc")
+        .def("get", [](const T& lcp, size_t idx) { return lcp[idx]; }, R"pbdoc(
+            Returns the idx-th entry of the LCP array.
         )pbdoc")
         .def("size", &T::size, R"pbdoc(
             Returns the number of elements in the LCP array.

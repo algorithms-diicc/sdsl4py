@@ -127,12 +127,12 @@ class CMakeBuild(build_ext):
 # The information here can also be placed in setup.cfg - better separation of
 # logic and declaration, and simpler if you include description/version in a file.
 setup(
-    name="sdsl4py",
-    version="0.0.1",
-    author="Komi Sans",
-    author_email="saguayo2021@udec.cl",
-    description="Python bindings for sdsl",
-    long_description="",
+    name="SDSL4Py",
+    version="1.0",
+    author="José Fuentes-Sepúlveda",
+    author_email="jfuentess@inf.udec.cl",
+    description="Python bindings for the SDSL Library",
+    long_description="Python library that provides bindings for the Succinct Data Structure Library (SDSL)",
     ext_modules=[CMakeExtension("sdsl4py")],
     cmdclass={"build_ext": CMakeBuild},
     zip_safe=False,

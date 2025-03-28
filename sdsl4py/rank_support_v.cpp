@@ -7,7 +7,7 @@
 
 namespace py = pybind11;
 
-// Agregar funciones de rank support
+// Helper function to add (bit) rank classes to the Python module
 template <typename T>
 void add_rank_support(py::module &m, const char* name) {
     py::class_<T>(m, name)
